@@ -1,4 +1,4 @@
-name = "pb"
+name = "pastebin-worker"
 compatibility_date = "2025-04-24"
 
 workers_dev = false
@@ -33,7 +33,7 @@ id = "cc5545770bd749d4aba8f3ccff1886c2"  # id of your KV namespace
 
 [[r2_buckets]]
 binding = "R2"  # do not touch this
-bucket_name = "pb"  # bucket name of your R2 bucket
+bucket_name = "pastebin-files"  # bucket name of your R2 bucket
 
 [vars]
 # must be consistent with your routes
