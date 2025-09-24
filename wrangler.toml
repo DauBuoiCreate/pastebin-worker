@@ -29,27 +29,27 @@ custom_domain = true
 
 [[kv_namespaces]]
 binding = "PB"  # do not touch this
-id = "435f8959b9de485ea48751ba557d90f5"  # id of your KV namespace
+id = "cc5545770bd749d4aba8f3ccff1886c2"  # id of your KV namespace
 
 [[r2_buckets]]
 binding = "R2"  # do not touch this
-bucket_name = "pb-shz-al"  # bucket name of your R2 bucket
+bucket_name = "pastebin-files"  # bucket name of your R2 bucket
 
 [vars]
 # must be consistent with your routes
-DEPLOY_URL = "https://shz.al"
+DEPLOY_URL = "pastebin-worker.nomsy.workers.dev"
 
 # url to repo, displayed in the index page
 REPO = "https://github.com/SharzyL/pastebin-worker"
 
 # the page title displayed in index page
-INDEX_PAGE_TITLE = "Pastebin Worker"
+INDEX_PAGE_TITLE = "Nhat Paste"
 
 # the name displayed in TOS
-TOS_MAINTAINER = "Sharzy"
+TOS_MAINTAINER = "NhatNg"
 
 # the email displayed in TOS
-TOS_MAIL = "pb@shz.al"
+TOS_MAIL = "nhat@minhat.net"
 
 # Cache-Control max-age for static pages
 CACHE_STATIC_PAGE_AGE = 7200
@@ -61,7 +61,7 @@ CACHE_PASTE_AGE = 600
 DEFAULT_EXPIRATION = "7d"
 
 # Max expiration
-MAX_EXPIRATION = "30d"
+MAX_EXPIRATION = "365d"
 
 # A collection of {username: password} pair
 # Leave empty to disable auth
