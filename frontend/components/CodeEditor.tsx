@@ -83,9 +83,29 @@ export function CodeEditor({
 
   const [heightPx, setHeightPx] = useState<number>(0)
   const hljs = useHLJS()
-  const [tabSetting, setTabSettings] = useState<TabSetting>({ char: "space", width: 2 })
 
+  // ===== Defaults =====
+  const LANG_DEFAULT = "cpp"
+  const DEFAULT_TAB: TabSetting = { char: "tab", width: 4 }
+
+  // indent default: Tab 4
+  const [tabSetting, setTabSettings] = useState<TabSetting>(DEFAULT_TAB)
+
+  // số dòng
   const lineCount = (content?.match(/\n/g)?.length || 0) + 1
+
+  // danh sách ngôn ngữ; đảm bảo luôn có 'cpp' ở đầu nếu thiếu
+  const allLangs = hljs ? hljs.listLanguages() : []
+  const langItems = (allLangs.includes(LANG_DEFAULT) ? allLangs : [LANG_DEFAULT, ...allLangs]).map((k) => ({ key: k }))
+
+  // nếu lang chưa đặt hoặc không hợp lệ -> ép về 'cpp'
+  useEffect(() => {
+    if (!hljs) return
+    if (!lang || !allLangs.includes(lang)) {
+      setLang(LANG_DEFAULT)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hljs, allLangs.join(","), lang])
 
   function syncScroll() {
     refHighlighting.current!.scrollLeft = refTextarea.current!.scrollLeft
@@ -153,11 +173,13 @@ export function CodeEditor({
           classNames={autoCompleteOverrides}
           label={"Language"}
           size={"sm"}
-          defaultItems={hljs ? hljs.listLanguages().map((lang) => ({ key: lang })) : []}
-          // we must not use undefined here to avoid conversion from uncontrolled component to controlled component
-          selectedKey={hljs && lang && hljs.listLanguages().includes(lang) ? lang : ""}
+          defaultItems={langItems}
+          defaultSelectedKey={LANG_DEFAULT}
+          // luôn controlled; nếu lang không hợp lệ thì rơi về 'cpp'
+          selectedKey={allLangs.includes(lang || "") ? (lang as string) : LANG_DEFAULT}
           onSelectionChange={(key) => {
-            setLang((key as string) || undefined) // when key is empty string, convert back to undefined
+            const v = (key as string) || LANG_DEFAULT
+            setLang(v)
           }}
         >
           {(language) => <AutocompleteItem key={language.key}>{language.key}</AutocompleteItem>}
@@ -168,8 +190,9 @@ export function CodeEditor({
           className={"max-w-[10em] text-foreground"}
           classNames={selectOverrides}
           selectedKeys={[formatTabSetting(tabSetting, false)]}
+          defaultSelectedKeys={[formatTabSetting(DEFAULT_TAB, false)]}
           onSelectionChange={(s) => {
-            setTabSettings(parseTabSetting(s.currentKey as string)!)
+            setTabSettings(parseTabSetting(s.currentKey as string)! )
           }}
         >
           {tabSettings.map((s) => (
@@ -187,7 +210,7 @@ export function CodeEditor({
               ref={refHighlighting}
               className={`text-foreground ${tst} w-full overflow-x-hidden`}
               style={{ marginLeft: lineNumOffset, width: `calc(100% - ${lineNumOffset})`, height: `${heightPx}px` }}
-              dangerouslySetInnerHTML={{ __html: highlightHTML(hljs, lang, handleNewLines(content)) }}
+              dangerouslySetInnerHTML={{ __html: highlightHTML(hljs, lang ?? LANG_DEFAULT, handleNewLines(content)) }}
             ></pre>
             <span
               ref={refLineNumbers}
@@ -203,7 +226,7 @@ export function CodeEditor({
             </span>
           </div>
           <textarea
-            className={`w-full font-mono min-h-[20em] text-transparent placeholder-default-400 
+            className={`w-full font-mono min-h[20em] text-transparent placeholder-default-400 
              caret-foreground bg-transparent outline-none relative overflow-x-auto`}
             style={{ marginLeft: lineNumOffset, width: `calc(100% - ${lineNumOffset})` }}
             wrap={"off"}
