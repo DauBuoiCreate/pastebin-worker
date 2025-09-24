@@ -37,7 +37,7 @@ bucket_name = "pastebin-files"  # bucket name of your R2 bucket
 
 [vars]
 # must be consistent with your routes
-DEPLOY_URL = "pastebin-worker.nomsy.workers.dev"
+DEPLOY_URL = "https://pastebin-worker.nomsy.workers.dev"
 
 # url to repo, displayed in the index page
 REPO = "https://github.com/SharzyL/pastebin-worker"
@@ -65,7 +65,7 @@ MAX_EXPIRATION = "365d"
 
 # A collection of {username: password} pair
 # Leave empty to disable auth
-BASIC_AUTH = {}
+# BASIC_AUTH = {}
 
 # Files larger than this threshold will be stored in R2
 R2_THRESHOLD = "100K"
