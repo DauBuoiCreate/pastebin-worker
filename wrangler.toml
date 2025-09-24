@@ -24,7 +24,7 @@ crons = ["0 0 * * *"]
 
 [[routes]]
 # Refer to https://developers.cloudflare.com/workers/wrangler/configuration/#routes
-pattern = "shz.al"
+pattern = "mnhat.moe"
 custom_domain = true
 
 [[kv_namespaces]]
