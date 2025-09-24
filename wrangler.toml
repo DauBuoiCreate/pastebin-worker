@@ -65,7 +65,7 @@ MAX_EXPIRATION = "365d"
 
 # A collection of {username: password} pair
 # Leave empty to disable auth
-# BASIC_AUTH = {}
+BASIC_AUTH = {}
 
 # Files larger than this threshold will be stored in R2
 R2_THRESHOLD = "100K"
