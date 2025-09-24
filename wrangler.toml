@@ -37,7 +37,7 @@ bucket_name = "pastebin-files"  # bucket name of your R2 bucket
 
 [vars]
 # must be consistent with your routes
-DEPLOY_URL = "https://pastebin-worker.nomsy.workers.dev"
+DEPLOY_URL = "https://mnhat.moe"
 
 # url to repo, displayed in the index page
 REPO = "https://github.com/SharzyL/pastebin-worker"
